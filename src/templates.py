@@ -105,7 +105,7 @@ def mobile_cta_bar():
 
 def wa_float():
     wa = whatsapp_href()
-    return f'<a href="{wa}" class="wa-float" target="_blank" rel="noopener" aria-label="Chat with SHARK on WhatsApp"><!-- TODO: replace placeholder WhatsApp number in data.py CONFIG -->{icons.UI["whatsapp"]}</a>'
+    return f'<a href="{wa}" class="wa-float" target="_blank" rel="noopener" aria-label="Chat with SHARK on WhatsApp">{icons.UI["whatsapp"]}</a>'
 
 # ---------------------------------------------------------------------------
 # Footer
@@ -210,7 +210,7 @@ def product_card(p, cat_name=None):
     cat = cat_name or CAT_BY_KEY[p["cat"]]["name"]
     art = icons.PRODUCT_ART.get(p["cat"], "")
     wa = whatsapp_href(f"Hello SHARK, I would like to enquire about the {p['name']}.")
-    return f'''<article class="product-card" data-product-card data-cat="{p['cat']}" data-name="{p['name']}">
+    return f'''<article class="product-card reveal" data-product-card data-cat="{p['cat']}" data-name="{p['name']}">
       <div class="product-media"><span class="cat-chip">{cat}</span>{art}</div>
       <div class="product-body">
         <div class="p-cat">{cat}</div>

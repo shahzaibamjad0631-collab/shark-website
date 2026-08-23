@@ -18,9 +18,8 @@ CONFIG = {
     "base_url": "https://www.sharksafety-uae.com",
     "phone_display": "[PHONE NUMBER]",
     "phone_tel": "#",
-    "whatsapp_display": "[WHATSAPP NUMBER]",
-    # All-zero placeholder — syntactically valid wa.me link, obviously not a real number.
-    "whatsapp_digits": "00000000000",
+    "whatsapp_display": "+971 56 133 9723",
+    "whatsapp_digits": "971561339723",
     "whatsapp_message": "Hello SHARK, I would like to enquire about your fire and safety equipment.",
     "email": "[EMAIL ADDRESS]",
     "address_line": "[BUSINESS ADDRESS]",

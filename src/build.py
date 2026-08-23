@@ -43,7 +43,7 @@ def build_home():
 
     featured_html = "\n".join(T.feature_product(data.PRODUCTS_BY_SLUG[s]) for s in data.FEATURED_SLUGS)
 
-    principle_html = "\n".join(f'''<div class="principle">
+    principle_html = "\n".join(f'''<div class="principle reveal">
       <div class="num">{p['n']}</div>
       <h3>{p['title']}</h3>
       <p>{p['text']}</p>

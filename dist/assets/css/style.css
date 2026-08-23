@@ -124,7 +124,7 @@ section{ position:relative; }
 }
 .btn svg{ width:16px; height:16px; transition:transform .25s var(--ease); }
 .btn-primary{ background:var(--red); color:var(--white); }
-.btn-primary:hover{ background:var(--red-dark); transform:translateY(-2px); }
+.btn-primary:hover{ background:var(--red-dark); transform:translateY(-2px); box-shadow:0 10px 24px rgba(200,16,46,.28); }
 .btn-dark{ background:var(--black); color:var(--white); }
 .btn-dark:hover{ background:var(--red); transform:translateY(-2px); }
 .btn-outline{ background:transparent; color:var(--black); border-color:var(--black); }
@@ -144,8 +144,9 @@ section{ position:relative; }
   background:rgba(10,11,13,.92);
   backdrop-filter:saturate(140%) blur(10px);
   border-bottom:1px solid rgba(255,255,255,.08);
-  transition: padding .3s var(--ease);
+  transition: padding .3s var(--ease), box-shadow .3s var(--ease), background-color .3s var(--ease);
 }
+.site-header.compact{ box-shadow:0 12px 30px rgba(0,0,0,.28); background:rgba(10,11,13,.97); }
 .header-row{
   display:flex; align-items:center; justify-content:space-between;
   padding:22px var(--edge);
@@ -253,7 +254,18 @@ body.drawer-open{ overflow:hidden; }
 .hero-sub{ margin-top:26px; font-size:18px; color:#B7B9BE; max-width:520px; line-height:1.65; }
 .hero-actions{ display:flex; gap:14px; margin-top:40px; flex-wrap:wrap; }
 
-.hero-figure{ position:relative; }
+/* Hero entrance — plays once on load, no scroll dependency */
+@keyframes heroIn{
+  from{ opacity:0; transform:translateY(22px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.hero-copy .eyebrow{ animation:heroIn .7s var(--ease) both; }
+.hero h1{ animation:heroIn .7s var(--ease) .08s both; }
+.hero-sub{ animation:heroIn .7s var(--ease) .16s both; }
+.hero-actions{ animation:heroIn .7s var(--ease) .24s both; }
+.hero-strip{ animation:heroIn .7s var(--ease) .3s both; }
+
+.hero-figure{ position:relative; animation:heroIn .8s var(--ease) .18s both; }
 .hero-visual{
   aspect-ratio: 4/5; position:relative; border:1px solid rgba(255,255,255,.12);
   background:
@@ -588,4 +600,15 @@ body.drawer-open{ overflow:hidden; }
   .footer-bottom{ flex-direction:column; }
   .hero-strip{ flex-direction:column; align-items:flex-start; }
   .section-head.split{ flex-direction:column; align-items:flex-start; }
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  .reveal{ opacity:1; transform:none; }
 }
