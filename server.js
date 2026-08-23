@@ -7,7 +7,10 @@ const server = http.createServer((request, response) => {
   return handler(request, response, {
     public: 'dist',
     cleanUrls: false,
-    trailingSlash: false
+    trailingSlash: false,
+    rewrites: [
+      { source: '/', destination: '/index.html' }
+    ]
   });
 });
 
