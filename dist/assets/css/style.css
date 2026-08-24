@@ -247,7 +247,7 @@ body.drawer-open{ overflow:hidden; }
   padding-top:clamp(64px,10vw,120px); padding-bottom:64px;
   flex-wrap:wrap; row-gap:28px;
 }
-.hero-copy{ max-width:640px; }
+.hero-copy{ max-width:640px; text-align:left; }
 .hero-copy .eyebrow{ margin-bottom:22px; }
 .hero h1{
   color:var(--white); font-size:clamp(38px,5.6vw,72px); line-height:1.02;
@@ -261,15 +261,15 @@ body.drawer-open{ overflow:hidden; }
    directly on the first slider image (no intro/loading screen), so these
    are the fast, immediate-on-load timings. */
 @keyframes heroIn{
-  from{ opacity:0; transform:translateY(22px); }
-  to{ opacity:1; transform:translateY(0); }
+  from{ opacity:0; transform:translateY(22px); filter:blur(5px); }
+  to{ opacity:1; transform:translateY(0); filter:blur(0); }
 }
 .hero-copy .eyebrow{ animation:heroIn .7s var(--ease) 0s both; }
-.hero h1{ animation:heroIn .7s var(--ease) .08s both; }
-.hero-sub{ animation:heroIn .7s var(--ease) .16s both; }
-.hero-actions{ animation:heroIn .7s var(--ease) .24s both; }
-.hero-strip{ animation:heroIn .7s var(--ease) .3s both; }
-.hero-dots{ animation:heroIn .7s var(--ease) .34s both; }
+.hero h1{ animation:heroIn .8s var(--ease) .08s both; }
+.hero-sub{ animation:heroIn .8s var(--ease) .16s both; }
+.hero-actions{ animation:heroIn .8s var(--ease) .24s both; }
+.hero-strip{ animation:heroIn .8s var(--ease) .3s both; }
+.hero-dots{ animation:heroIn .8s var(--ease) .34s both; }
 
 /* Hero eyebrow — left-aligned, letter-by-letter typing/reveal (~1.8s, plays
    once on load). Replaces the generic heroIn fade for this element only;
@@ -300,6 +300,7 @@ body.drawer-open{ overflow:hidden; }
 .hero-slide img{
   width:100%; height:100%; object-fit:cover; display:block;
   transform:scale(1); transform-origin:center center;
+  filter:contrast(1.08) saturate(1.12) brightness(.97);
 }
 .hero-slide.active img{ animation:heroSlideZoom 5.6s linear forwards; }
 @keyframes heroSlideZoom{
