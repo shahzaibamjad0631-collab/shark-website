@@ -209,10 +209,11 @@ def eyebrow_only(text, dark=False):
 def product_card(p, cat_name=None):
     from data import CAT_BY_KEY
     cat = cat_name or CAT_BY_KEY[p["cat"]]["name"]
-    art = icons.PRODUCT_ART.get(p["cat"], "")
+    media = (f'<img src="{p["image"]}" alt="{p["name"]}" loading="lazy" decoding="async">'
+             if p.get("image") else icons.PRODUCT_ART.get(p["cat"], ""))
     wa = whatsapp_href(f"Hello SHARK, I would like to enquire about the {p['name']}.")
     return f'''<article class="product-card reveal" data-product-card data-cat="{p['cat']}" data-name="{p['name']}">
-      <div class="product-media"><span class="cat-chip">{cat}</span>{art}</div>
+      <div class="product-media"><span class="cat-chip">{cat}</span>{media}</div>
       <div class="product-body">
         <div class="p-cat">{cat}</div>
         <h3>{p['name']}</h3>
@@ -227,10 +228,11 @@ def product_card(p, cat_name=None):
 def feature_product(p):
     from data import CAT_BY_KEY
     cat = CAT_BY_KEY[p["cat"]]["name"]
-    art = icons.PRODUCT_ART.get(p["cat"], "")
+    media = (f'<img src="{p["image"]}" alt="{p["name"]}" loading="lazy" decoding="async">'
+             if p.get("image") else icons.PRODUCT_ART.get(p["cat"], ""))
     wa = whatsapp_href(f"Hello SHARK, I would like to enquire about the {p['name']}.")
     return f'''<article class="feature-product reveal">
-      <div class="media">{art}</div>
+      <div class="media">{media}</div>
       <div class="info">
         <div class="p-cat eyebrow">{cat}</div>
         <h3 style="font-size:26px;margin-top:14px;">{p['name']}</h3>

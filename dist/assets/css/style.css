@@ -365,7 +365,9 @@ body.drawer-open{ overflow:hidden; }
   overflow:hidden; border-bottom:1px solid var(--paper-dim);
 }
 .product-media svg{ position:absolute; inset:0; width:100%; height:100%; padding:18%; color:var(--ink); opacity:.86; transition:transform .4s var(--ease); }
+.product-media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; padding:10%; transition:transform .4s var(--ease); }
 .product-card:hover .product-media svg{ transform:scale(1.06); }
+.product-card:hover .product-media img{ transform:scale(1.06); }
 .product-media .cat-chip{
   position:absolute; top:14px; left:14px; background:var(--black); color:#fff;
   font-family:var(--font-head); font-size:10.5px; font-weight:700; text-transform:uppercase;
@@ -384,6 +386,7 @@ body.drawer-open{ overflow:hidden; }
 }
 .feature-product .media{ aspect-ratio:1/1; background:linear-gradient(150deg,#EFEFEC,#E3E2DE); position:relative; overflow:hidden; }
 .feature-product .media svg{ position:absolute; inset:0; width:100%; height:100%; padding:16%; color:var(--ink); }
+.feature-product .media img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; padding:8%; }
 .feature-product .info{ padding:var(--sp-7); display:flex; flex-direction:column; justify-content:center; }
 
 /* ---------- Filter / search bar ---------- */
@@ -525,10 +528,12 @@ body.drawer-open{ overflow:hidden; }
 .pd-grid{ display:grid; grid-template-columns:.95fr 1.05fr; gap:56px; }
 .pd-gallery-main{ aspect-ratio:1/1; background:linear-gradient(150deg,#EFEFEC,#E3E2DE); position:relative; overflow:hidden; border:1px solid var(--paper-dim); }
 .pd-gallery-main svg{ position:absolute; inset:0; width:100%; height:100%; padding:16%; color:var(--ink); }
+.pd-gallery-main img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; padding:8%; }
 .pd-thumbs{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:12px; }
 .pd-thumb{ aspect-ratio:1/1; background:linear-gradient(150deg,#EFEFEC,#E3E2DE); border:1.5px solid transparent; position:relative; overflow:hidden; }
 .pd-thumb.active{ border-color:var(--red); }
 .pd-thumb svg{ position:absolute; inset:0; width:100%; height:100%; padding:20%; color:var(--ink); opacity:.8; }
+.pd-thumb img{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; padding:10%; }
 .pd-cat{ font-size:12.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--red); }
 .pd-title{ margin-top:12px; font-size:clamp(28px,3.6vw,40px); }
 .pd-overview{ margin-top:20px; font-size:16px; color:var(--ink-soft); line-height:1.75; }

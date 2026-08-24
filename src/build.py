@@ -375,8 +375,14 @@ def build_product_detail(p):
     cat = CAT_BY_KEY[p["cat"]]
     wa = data.whatsapp_href(f"Hello SHARK, I would like to enquire about the {p['name']}.")
     art = icons.PRODUCT_ART.get(p["cat"], "")
+    has_photo = bool(p.get("image"))
+    main_media = (f'<img src="{p["image"]}" alt="{p["name"]}" loading="eager" decoding="async">'
+                  if has_photo else art)
 
-    thumbs = "\n".join(f'<div class="pd-thumb{" active" if i==0 else ""}">{art}</div>' for i in range(4))
+    if has_photo:
+        thumbs = f'<div class="pd-thumb active"><img src="{p["image"]}" alt="{p["name"]}" loading="lazy" decoding="async"></div>'
+    else:
+        thumbs = "\n".join(f'<div class="pd-thumb{" active" if i==0 else ""}">{art}</div>' for i in range(4))
     features = "\n".join(f"<li>{f}</li>" for f in p["features"])
     specs = "\n".join(f"<tr><td>{k}</td><td>{v}</td></tr>" for k, v in p["specs"])
     applications = "\n".join(f"<li>{a}</li>" for a in p["applications"])
@@ -403,7 +409,7 @@ def build_product_detail(p):
       {T.breadcrumbs([("Products", "/products.html"), (cat["name"], f"/products.html?cat={cat['key']}"), (p["name"], None)])}
       <div class="pd-grid" style="margin-top:32px;">
         <div data-gallery>
-          <div class="pd-gallery-main">{art}</div>
+          <div class="pd-gallery-main">{main_media}</div>
           <div class="pd-thumbs">{thumbs}</div>
         </div>
         <div>
