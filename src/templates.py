@@ -213,7 +213,7 @@ def product_card(p, cat_name=None):
              if p.get("image") else icons.PRODUCT_ART.get(p["cat"], ""))
     wa = whatsapp_href(f"Hello SHARK, I would like to enquire about the {p['name']}.")
     return f'''<article class="product-card reveal" data-product-card data-cat="{p['cat']}" data-name="{p['name']}">
-      <div class="product-media"><span class="cat-chip">{cat}</span>{media}</div>
+      <div class="product-media">{media}</div>
       <div class="product-body">
         <div class="p-cat">{cat}</div>
         <h3>{p['name']}</h3>

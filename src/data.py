@@ -148,7 +148,7 @@ PRODUCTS = [
         ("Cylinder Finish", "Specification available on request")],
        ["Offices and commercial units", "Warehouses and storage areas", "Retail premises", "Construction sites"],
        ["Common capacities: 1kg, 2kg, 4kg, 6kg, 9kg — confirm current availability with our team"],
-       image="/assets/img/products/abc-dry-powder-fire-extinguisher.jpg"),
+       image="/assets/img/products/abc-dry-powder-fire-extinguisher.png"),
     _p("co2-fire-extinguisher", "CO2 Fire Extinguisher", "extinguishers",
        "Clean-agent extinguisher suited to electrical and equipment fire risk.",
        "Carbon dioxide extinguishers discharge a clean, non-conductive gas agent that leaves no residue — "
@@ -161,7 +161,7 @@ PRODUCTS = [
         ("Discharge Type", "Horn nozzle")],
        ["Server and IT rooms", "Electrical switch rooms", "Workshops with machinery", "Commercial kitchens (non-cooking-oil equipment areas)"],
        ["Common capacities: 2kg, 5kg — confirm current availability with our team"],
-       image="/assets/img/products/co2-fire-extinguisher.jpg"),
+       image="/assets/img/products/co2-fire-extinguisher.png"),
     _p("foam-fire-extinguisher", "Foam Fire Extinguisher", "extinguishers",
        "Foam-based extinguisher suited to flammable liquid and general fire risk.",
        "Foam extinguishers are effective against flammable liquid fires as well as general combustible "
@@ -174,7 +174,7 @@ PRODUCTS = [
         ("Cylinder Finish", "Specification available on request")],
        ["Fuel and liquid storage areas", "Industrial facilities", "Car parks and workshops", "Warehousing"],
        ["Common capacities: 3 litre, 6 litre, 9 litre — confirm current availability with our team"],
-       image="/assets/img/products/foam-fire-extinguisher.jpg"),
+       image="/assets/img/products/foam-fire-extinguisher.png"),
     _p("water-fire-extinguisher", "Water Fire Extinguisher", "extinguishers",
        "Water-based extinguisher for standard Class A combustible material risk.",
        "A straightforward water-jet or spray extinguisher for standard combustible material risk such as "
@@ -186,7 +186,7 @@ PRODUCTS = [
         ("Cylinder Finish", "Specification available on request")],
        ["Offices", "Hotels and hospitality areas", "Retail premises", "Educational and institutional buildings"],
        ["Common capacities: 6 litre, 9 litre — confirm current availability with our team"],
-       image="/assets/img/products/water-fire-extinguisher.jpg"),
+       image="/assets/img/products/water-fire-extinguisher.png"),
 
     _p("layflat-fire-hose", "Layflat Fire Hose", "hoses",
        "Flexible layflat hose for fire hydrant and hose reel water delivery.",
