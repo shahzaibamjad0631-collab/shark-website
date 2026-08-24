@@ -237,137 +237,87 @@ body.drawer-open{ overflow:hidden; }
 /* ---------- Hero ---------- */
 .hero{
   position:relative; background:var(--black); color:var(--white);
-  padding-top:clamp(64px,10vw,120px);
-  padding-bottom:0;
   overflow:hidden;
+  min-height:min(84vh, 780px);
+  display:flex; flex-direction:column;
 }
-.hero-grid{
-  display:grid; grid-template-columns: 1.05fr .95fr; gap:48px;
-  align-items:end;
+.hero > .container-wide{
+  position:relative; z-index:2;
+  flex:1; display:flex; align-items:center;
+  padding-top:clamp(64px,10vw,120px); padding-bottom:64px;
+  flex-wrap:wrap; row-gap:28px;
 }
+.hero-copy{ max-width:640px; }
 .hero-copy .eyebrow{ margin-bottom:22px; }
 .hero h1{
   color:var(--white); font-size:clamp(38px,5.6vw,72px); line-height:1.02;
   letter-spacing:-.02em;
 }
 .hero h1 em{ font-style:normal; color:var(--red); }
-.hero-sub{ margin-top:26px; font-size:18px; color:#B7B9BE; max-width:520px; line-height:1.65; }
+.hero-sub{ margin-top:26px; font-size:18px; color:#DADBDE; max-width:520px; line-height:1.65; }
 .hero-actions{ display:flex; gap:14px; margin-top:40px; flex-wrap:wrap; }
 
-/* Hero entrance — plays once on load, no scroll dependency */
+/* Hero entrance — plays once on load, no scroll dependency. The site opens
+   directly on the first slider image (no intro/loading screen), so these
+   are the fast, immediate-on-load timings. */
 @keyframes heroIn{
   from{ opacity:0; transform:translateY(22px); }
   to{ opacity:1; transform:translateY(0); }
 }
-/* Default delays assume the homepage intro (below) is about to play, so the
-   hero only fades in once the intro panels start splitting apart. Pages
-   without the intro (and repeat visits — see .no-intro) use the fast values. */
-.hero-copy .eyebrow{ animation:heroIn .7s var(--ease) 1.5s both; }
-.hero h1{ animation:heroIn .7s var(--ease) 1.58s both; }
-.hero-sub{ animation:heroIn .7s var(--ease) 1.66s both; }
-.hero-actions{ animation:heroIn .7s var(--ease) 1.74s both; }
-.hero-strip{ animation:heroIn .7s var(--ease) 1.8s both; }
-.hero-figure{ position:relative; animation:heroIn .8s var(--ease) 1.68s both; }
+.hero-copy .eyebrow{ animation:heroIn .7s var(--ease) 0s both; }
+.hero h1{ animation:heroIn .7s var(--ease) .08s both; }
+.hero-sub{ animation:heroIn .7s var(--ease) .16s both; }
+.hero-actions{ animation:heroIn .7s var(--ease) .24s both; }
+.hero-strip{ animation:heroIn .7s var(--ease) .3s both; }
+.hero-dots{ animation:heroIn .7s var(--ease) .34s both; }
 
-/* Repeat visit this session — intro already played, skip straight to fast timing */
-html.no-intro .hero-copy .eyebrow{ animation-delay:0s; }
-html.no-intro .hero h1{ animation-delay:.08s; }
-html.no-intro .hero-sub{ animation-delay:.16s; }
-html.no-intro .hero-actions{ animation-delay:.24s; }
-html.no-intro .hero-strip{ animation-delay:.3s; }
-html.no-intro .hero-figure{ animation-delay:.18s; }
-.hero-visual{
-  aspect-ratio: 4/5; position:relative; border:1px solid rgba(255,255,255,.12);
-  background:
-    linear-gradient(160deg, #1a1c20 0%, #0a0b0d 62%);
-  overflow:hidden;
+/* ---------- Hero background image slider ---------- */
+.hero-slider{
+  position:absolute; inset:0; z-index:0;
 }
-.hero-visual .grid-overlay{
+.hero-slide{
   position:absolute; inset:0;
-  background-image:
-    linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
-  background-size:34px 34px;
-  mask-image: radial-gradient(circle at 70% 30%, black 10%, transparent 72%);
+  opacity:0;
+  transition:opacity 1s ease;
 }
-.hero-visual .device{ position:absolute; inset:0; }
-.hero-visual .plate{
-  position:absolute; font-family:var(--font-head); font-weight:800; color:rgba(255,255,255,.9);
-  font-size:11px; letter-spacing:.14em; text-transform:uppercase;
-  display:flex; align-items:center; gap:8px;
+.hero-slide.active{ opacity:1; z-index:1; }
+.hero-slide picture{ position:absolute; inset:0; display:block; width:100%; height:100%; }
+.hero-slide img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  transform:scale(1); transform-origin:center center;
 }
-.hero-visual .plate .dot{ width:6px; height:6px; background:var(--red); border-radius:50%; }
-.hero-visual .corner-frame{ position:absolute; inset:20px; border:1px solid rgba(255,255,255,.18); pointer-events:none; }
-.hero-visual .corner-frame::before,.hero-visual .corner-frame::after{
-  content:""; position:absolute; width:22px; height:22px; border:2px solid var(--red);
+.hero-slide.active img{ animation:heroSlideZoom 5.6s linear forwards; }
+@keyframes heroSlideZoom{
+  from{ transform:scale(1); }
+  to{ transform:scale(1.035); }
 }
-.hero-visual .corner-frame::before{ top:-2px; left:-2px; border-right:none; border-bottom:none; }
-.hero-visual .corner-frame::after{ bottom:-2px; right:-2px; border-left:none; border-top:none; }
-.hero-visual .device{ position:absolute; inset:0; color:#E7E7E5; }
-.hero-visual .device svg{ width:100%; height:100%; padding:15%; }
+.hero-slider-overlay{
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:
+    linear-gradient(185deg, rgba(6,7,9,.8) 0%, rgba(6,7,9,.46) 40%, rgba(6,7,9,.58) 68%, rgba(6,7,9,.94) 100%),
+    linear-gradient(100deg, rgba(6,7,9,.66) 0%, rgba(6,7,9,.14) 50%, rgba(6,7,9,.5) 100%);
+}
+
+.hero-dots{
+  display:flex; justify-content:flex-start; gap:9px;
+  margin-top:38px;
+}
+.hero-dots .dot{
+  width:6px; height:6px; border-radius:50%;
+  background:rgba(255,255,255,.38);
+  transition:background .35s ease, transform .35s ease;
+}
+.hero-dots .dot.active{ background:var(--red); transform:scale(1.35); }
 
 .hero-strip{
-  margin-top: 56px;
+  position:relative; z-index:2;
+  background:var(--black);
   border-top:1px solid rgba(255,255,255,.12);
-  padding: 20px var(--edge);
-  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;
-  max-width:1600px; margin-left:auto; margin-right:auto;
+  padding: 20px 0;
   font-family:var(--font-head); font-size:12.5px; font-weight:700; letter-spacing:.12em; color:#9A9DA3;
 }
 .hero-strip span.tag{ color:var(--white); }
 .hero-strip .sep{ color:var(--red); }
-
-/* ---------- Homepage opening intro (4-panel photo reveal) ---------- */
-.intro-overlay{
-  position:fixed; inset:0; z-index:2000;
-  display:flex;
-  background:var(--black);
-}
-html.no-intro .intro-overlay{ display:none; }
-
-.intro-panel{
-  position:relative; flex:1 1 25%; overflow:hidden;
-  border-right:1px solid rgba(255,255,255,.10);
-  will-change:transform;
-}
-.intro-panel:last-child{ border-right:none; }
-.intro-panel img{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-}
-.intro-panel::after{
-  content:""; position:absolute; inset:0;
-  background:linear-gradient(165deg, rgba(200,16,46,.12), rgba(10,11,13,.62));
-}
-
-@keyframes introPanelLeft{
-  0%   { transform:scale(1.04) translateX(0); }
-  33%  { transform:scale(1) translateX(0); }
-  58%  { transform:scale(1) translateX(0); }
-  100% { transform:scale(1) translateX(-100%); }
-}
-@keyframes introPanelRight{
-  0%   { transform:scale(1.04) translateX(0); }
-  33%  { transform:scale(1) translateX(0); }
-  58%  { transform:scale(1) translateX(0); }
-  100% { transform:scale(1) translateX(100%); }
-}
-.intro-panel:nth-child(1), .intro-panel:nth-child(2){
-  animation:introPanelLeft 2.4s var(--ease) forwards;
-}
-.intro-panel:nth-child(3), .intro-panel:nth-child(4){
-  animation:introPanelRight 2.4s var(--ease) forwards;
-}
-
-@media (max-width:720px){
-  .intro-panel:nth-child(1), .intro-panel:nth-child(2){ animation-duration:1.6s; }
-  .intro-panel:nth-child(3), .intro-panel:nth-child(4){ animation-duration:1.6s; }
-  html:not(.no-intro) .hero-copy .eyebrow{ animation-delay:1.0s; }
-  html:not(.no-intro) .hero h1{ animation-delay:1.08s; }
-  html:not(.no-intro) .hero-sub{ animation-delay:1.16s; }
-  html:not(.no-intro) .hero-actions{ animation-delay:1.24s; }
-  html:not(.no-intro) .hero-strip{ animation-delay:1.3s; }
-  html:not(.no-intro) .hero-figure{ animation-delay:1.18s; }
-}
 
 /* Page header (non-home hero) */
 .page-hero{
@@ -637,8 +587,7 @@ html.no-intro .intro-overlay{ display:none; }
   .burger{ display:flex; }
   .footer-top{ grid-template-columns:1fr 1fr; row-gap:40px; }
   .footer-brand{ grid-column:1/-1; }
-  .hero-grid{ grid-template-columns:1fr; }
-  .hero-figure{ order:-1; max-width:420px; }
+  .hero{ min-height:min(78vh, 680px); }
   .split, .pd-grid, .contact-grid, .feature-product{ grid-template-columns:1fr; }
   .split.reverse{ direction:ltr; }
   .principle-row{ grid-template-columns:1fr 1fr; }
@@ -660,8 +609,19 @@ html.no-intro .intro-overlay{ display:none; }
   .cta-banner .actions .btn{ flex:1; justify-content:center; }
   .footer-top{ grid-template-columns:1fr; }
   .footer-bottom{ flex-direction:column; }
-  .hero-strip{ flex-direction:column; align-items:flex-start; }
+  .hero-strip .container-wide{ flex-direction:column; align-items:flex-start; }
   .section-head.split{ flex-direction:column; align-items:flex-start; }
+
+  /* Hero slider — shorter viewport, and each photo gets its own mobile crop
+     so the fire-safety equipment stays framed on a taller, narrower screen. */
+  .hero{ min-height:min(72vh, 560px); }
+  .hero > .container-wide{ padding-bottom:44px; align-items:flex-end; }
+  .hero-sub{ max-width:100%; }
+  .hero-dots{ margin-top:26px; }
+  .hero-slide:nth-child(1) img{ object-position:32% 46%; }
+  .hero-slide:nth-child(2) img{ object-position:38% 55%; }
+  .hero-slide:nth-child(3) img{ object-position:58% 55%; }
+  .hero-slide:nth-child(4) img{ object-position:56% 40%; }
 }
 
 /* ---------- Reduced motion ---------- */
@@ -674,5 +634,6 @@ html.no-intro .intro-overlay{ display:none; }
     scroll-behavior:auto !important;
   }
   .reveal{ opacity:1; transform:none; }
-  .intro-overlay{ display:none !important; }
+  .hero-slide{ transition:none !important; }
+  .hero-slide.active img{ animation:none !important; transform:scale(1) !important; }
 }

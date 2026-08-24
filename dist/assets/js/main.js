@@ -9,29 +9,26 @@
       el.textContent = new Date().getFullYear();
     });
 
-    /* ---------- Homepage opening intro (4-panel photo reveal) ---------- */
-    var introOverlay = document.getElementById("introOverlay");
-    if(introOverlay){
-      if(document.documentElement.classList.contains("no-intro")){
-        introOverlay.remove();
-      } else {
-        try{ sessionStorage.setItem("sharkIntroPlayed", "1"); }catch(e){}
-        var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if(reducedMotion){
-          introOverlay.remove();
-        } else {
-          var introDone = false;
-          var cleanupIntro = function(){
-            if(introDone) return;
-            introDone = true;
-            if(introOverlay.parentNode) introOverlay.remove();
-          };
-          var panels = introOverlay.querySelectorAll(".intro-panel");
-          var lastPanel = panels[panels.length - 1];
-          if(lastPanel){ lastPanel.addEventListener("animationend", cleanupIntro); }
-          /* Fallback in case animationend never fires (e.g. tab backgrounded) */
-          setTimeout(cleanupIntro, 3200);
-        }
+    /* ---------- Homepage hero background slider ---------- */
+    var heroSlider = document.getElementById("heroSlider");
+    if(heroSlider){
+      var slides = Array.prototype.slice.call(heroSlider.querySelectorAll(".hero-slide"));
+      var dots = Array.prototype.slice.call(document.querySelectorAll(".hero-dots .dot"));
+      var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      /* The first slide is already marked .active in the HTML, so the page
+         opens directly on it with no JS needed — no loading/intro delay.
+         With reduced motion, just leave it there and skip auto-advance. */
+      if(slides.length > 1 && !reducedMotion){
+        var current = 0;
+        var ADVANCE_MS = 4600;
+        setInterval(function(){
+          var next = (current + 1) % slides.length;
+          slides[current].classList.remove("active");
+          if(dots[current]) dots[current].classList.remove("active");
+          slides[next].classList.add("active");
+          if(dots[next]) dots[next].classList.add("active");
+          current = next;
+        }, ADVANCE_MS);
       }
     }
 

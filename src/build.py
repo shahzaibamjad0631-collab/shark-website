@@ -59,31 +59,57 @@ def build_home():
     faq_html = "\n".join(T.faq_item(q, a, open_first=(i==0)) for i, (q, a) in enumerate(data.FAQS[:6]))
 
     wa = data.whatsapp_href()
+
+    # Hero background slider — 4 clean fire-safety photographs, one full-bleed
+    # image at a time, auto-advancing with a slow crossfade + subtle zoom.
+    # Desktop/tablet focal points target where the equipment sits in each
+    # photo; mobile crops are tuned separately via .hero-slide:nth-child in
+    # style.css so the subject stays framed on a taller, narrower viewport.
+    hero_slides_data = [
+        "20% 42%",
+        "28% 55%",
+        "68% 52%",
+        "62% 40%",
+    ]
+    hero_slides = []
+    for i, pos in enumerate(hero_slides_data):
+        n = i + 1
+        active_cls = " active" if i == 0 else ""
+        loading_attrs = 'fetchpriority="high" loading="eager"' if i == 0 else 'loading="lazy"'
+        hero_slides.append(f'''<div class="hero-slide{active_cls}" data-slide="{n}">
+        <picture>
+          <source srcset="/assets/img/hero-slide-{n}.webp" type="image/webp">
+          <img src="/assets/img/hero-slide-{n}.jpg" alt="" {loading_attrs} decoding="async" style="object-position:{pos};">
+        </picture>
+      </div>''')
+    hero_slides_html = "\n      ".join(hero_slides)
+    hero_dots_html = "\n        ".join(
+        f'<span class="dot{" active" if i == 0 else ""}" data-dot="{i+1}"></span>' for i in range(4)
+    )
+
     body = f'''
   <section class="hero">
+    <div class="hero-slider" aria-hidden="true" id="heroSlider">
+      {hero_slides_html}
+      <div class="hero-slider-overlay"></div>
+    </div>
     <div class="container-wide">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow on-dark">SHARK &middot; Fire &amp; Safety Equipment</div>
-          <h1>FIRE &amp; SAFETY EQUIPMENT.<br>BUILT AROUND <em>PROTECTION.</em></h1>
-          <p class="hero-sub">Professional fire fighting and safety equipment for commercial, industrial and
-            business requirements across the UAE.</p>
-          <div class="hero-actions">
-            {T.btn("Request a Quote", "/contact.html", "primary")}
-            {T.btn("WhatsApp Us", wa, "outline-light", icon="whatsapp", target="_blank")}
-          </div>
+      <div class="hero-copy">
+        <div class="eyebrow on-dark">SHARK &middot; Fire &amp; Safety Equipment</div>
+        <h1>FIRE &amp; SAFETY EQUIPMENT.<br>BUILT AROUND <em>PROTECTION.</em></h1>
+        <p class="hero-sub">Professional fire fighting and safety equipment for commercial, industrial and
+          business requirements across the UAE.</p>
+        <div class="hero-actions">
+          {T.btn("Request a Quote", "/contact.html", "primary")}
+          {T.btn("WhatsApp Us", wa, "outline-light", icon="whatsapp", target="_blank")}
         </div>
-        <div class="hero-figure">
-          <div class="hero-visual">
-            <div class="grid-overlay"></div>
-            <div class="device">{icons.PRODUCT_ART['extinguishers']}</div>
-            <div class="corner-frame"></div>
-            <div class="plate" style="top:22px;left:22px;"><span class="dot"></span>UNIT&nbsp;/&nbsp;01</div>
-            <div class="plate" style="bottom:22px;left:22px;">FIRE EXTINGUISHER &mdash; ABC</div>
-          </div>
+        <div class="hero-dots" aria-hidden="true">
+          {hero_dots_html}
         </div>
       </div>
-      <div class="hero-strip">
+    </div>
+    <div class="hero-strip">
+      <div class="container-wide" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
         <span class="tag">FIRE SAFETY EQUIPMENT</span>
         <span>COMMERCIAL <span class="sep">&bull;</span> INDUSTRIAL <span class="sep">&bull;</span> PROFESSIONAL</span>
       </div>
@@ -168,11 +194,12 @@ def build_home():
     [T.btn("Request a Quote", "/contact.html", "primary"),
      T.btn("Contact SHARK", "/contact.html", "outline-light")], extra_class="alt")}
 '''
+    hero_preload = '<link rel="preload" as="image" href="/assets/img/hero-slide-1.jpg" fetchpriority="high">'
     write("/index.html", T.page(
         "SHARK | Fire &amp; Safety Equipment Supplier in the UAE",
         "SHARK supplies fire fighting and safety equipment for commercial, industrial and business "
         "requirements across the UAE — fire extinguishers, hose reels, cabinets, alarms and more.",
-        "/index.html", body, schema_json=org_schema(), intro_html=T.intro_overlay()))
+        "/index.html", body, schema_json=org_schema(), preload_html=hero_preload))
 
 # ============================================================================
 # ABOUT
