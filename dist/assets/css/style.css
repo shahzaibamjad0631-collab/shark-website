@@ -271,6 +271,21 @@ body.drawer-open{ overflow:hidden; }
 .hero-strip{ animation:heroIn .7s var(--ease) .3s both; }
 .hero-dots{ animation:heroIn .7s var(--ease) .34s both; }
 
+/* Hero eyebrow — left-aligned, letter-by-letter typing/reveal (~1.8s, plays
+   once on load). Replaces the generic heroIn fade for this element only;
+   the red accent line (.eyebrow::before) is unaffected and shows normally. */
+.hero-copy .eyebrow.hero-eyebrow{ animation:none; opacity:1; transform:none; }
+.hero-eyebrow .ch{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(3px);
+  animation:heroEyebrowChar .3s var(--ease) forwards;
+}
+@keyframes heroEyebrowChar{
+  from{ opacity:0; transform:translateY(3px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
 /* ---------- Hero background image slider ---------- */
 .hero-slider{
   position:absolute; inset:0; z-index:0;

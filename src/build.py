@@ -87,6 +87,21 @@ def build_home():
         f'<span class="dot{" active" if i == 0 else ""}" data-dot="{i+1}"></span>' for i in range(4)
     )
 
+    # Hero eyebrow — small red brand line above the H1. Split into one <span>
+    # per character (left-to-right, staggered animation-delay) for a clean
+    # left-aligned typing/reveal effect. Total reveal ~1.8s, plays once on
+    # load; reduced-motion visitors get the sitewide override that collapses
+    # animation-duration/delay to ~0, so it just appears instantly for them.
+    import html as _html
+    hero_eyebrow_text = "SHARK · Fire & Safety Equipments"
+    HERO_EYEBROW_TOTAL_S = 1.8
+    _n_chars = len(hero_eyebrow_text)
+    _step = HERO_EYEBROW_TOTAL_S / max(_n_chars, 1)
+    hero_eyebrow_chars = "".join(
+        f'<span class="ch" style="animation-delay:{i * _step:.3f}s">{_html.escape(ch) if ch != " " else "&nbsp;"}</span>'
+        for i, ch in enumerate(hero_eyebrow_text)
+    )
+
     body = f'''
   <section class="hero">
     <div class="hero-slider" aria-hidden="true" id="heroSlider">
@@ -95,7 +110,7 @@ def build_home():
     </div>
     <div class="container-wide">
       <div class="hero-copy">
-        <div class="eyebrow on-dark">SHARK &middot; Fire &amp; Safety Equipment</div>
+        <div class="eyebrow on-dark hero-eyebrow" aria-label="{_html.escape(hero_eyebrow_text)}"><span aria-hidden="true">{hero_eyebrow_chars}</span></div>
         <h1>FIRE &amp; SAFETY EQUIPMENT.<br>BUILT AROUND <em>PROTECTION.</em></h1>
         <p class="hero-sub">Professional fire fighting and safety equipment for commercial, industrial and
           business requirements across the UAE.</p>
