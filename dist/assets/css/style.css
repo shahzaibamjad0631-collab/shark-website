@@ -286,6 +286,21 @@ body.drawer-open{ overflow:hidden; }
   to{ opacity:1; transform:translateY(0); }
 }
 
+/* Main hero heading — premium word-by-word "curtain" reveal. Each word sits
+   in a masked (overflow-hidden) box and slides up into view, left to right,
+   one after another. Replaces the generic heroIn fade for this element only. */
+.hero h1.hero-heading{ animation:none; opacity:1; transform:none; filter:none; }
+.hero-word{ display:inline-block; overflow:hidden; vertical-align:bottom; }
+.hero-word > span{
+  display:inline-block;
+  transform:translateY(112%);
+  opacity:0;
+  animation:heroWordIn .75s cubic-bezier(.16,.84,.32,1) forwards;
+}
+@keyframes heroWordIn{
+  to{ transform:translateY(0); opacity:1; }
+}
+
 /* ---------- Hero background image slider ---------- */
 .hero-slider{
   position:absolute; inset:0; z-index:0;

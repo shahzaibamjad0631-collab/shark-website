@@ -102,6 +102,21 @@ def build_home():
         for i, ch in enumerate(hero_eyebrow_text)
     )
 
+    # Main hero heading — premium word-by-word "curtain" reveal: each word is
+    # masked (overflow hidden) and slides up into view, left to right, one
+    # after another. Replaces the plain fade used elsewhere in the hero.
+    HERO_WORD_STEP_S = 0.07
+    HERO_WORD_START_S = 0.1
+    _word_i = [0]
+    def _hero_word(w):
+        i = _word_i[0]; _word_i[0] += 1
+        delay = HERO_WORD_START_S + i * HERO_WORD_STEP_S
+        return f'<span class="hero-word"><span style="animation-delay:{delay:.3f}s">{_html.escape(w)}</span></span>'
+    hero_h1_html = (
+        f'{_hero_word("FIRE")} {_hero_word("&")} {_hero_word("SAFETY")} {_hero_word("EQUIPMENT.")}<br>'
+        f'{_hero_word("BUILT")} {_hero_word("AROUND")} <em>{_hero_word("PROTECTION.")}</em>'
+    )
+
     body = f'''
   <section class="hero">
     <div class="hero-slider" aria-hidden="true" id="heroSlider">
@@ -111,7 +126,7 @@ def build_home():
     <div class="container-wide">
       <div class="hero-copy">
         <div class="eyebrow on-dark hero-eyebrow" aria-label="{_html.escape(hero_eyebrow_text)}"><span aria-hidden="true">{hero_eyebrow_chars}</span></div>
-        <h1>FIRE &amp; SAFETY EQUIPMENT.<br>BUILT AROUND <em>PROTECTION.</em></h1>
+        <h1 class="hero-heading">{hero_h1_html}</h1>
         <p class="hero-sub">Professional fire fighting and safety equipment for commercial, industrial and
           business requirements across the UAE.</p>
         <div class="hero-actions">
