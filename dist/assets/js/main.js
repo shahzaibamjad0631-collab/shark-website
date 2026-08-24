@@ -9,6 +9,32 @@
       el.textContent = new Date().getFullYear();
     });
 
+    /* ---------- Homepage opening intro (4-panel photo reveal) ---------- */
+    var introOverlay = document.getElementById("introOverlay");
+    if(introOverlay){
+      if(document.documentElement.classList.contains("no-intro")){
+        introOverlay.remove();
+      } else {
+        try{ sessionStorage.setItem("sharkIntroPlayed", "1"); }catch(e){}
+        var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if(reducedMotion){
+          introOverlay.remove();
+        } else {
+          var introDone = false;
+          var cleanupIntro = function(){
+            if(introDone) return;
+            introDone = true;
+            if(introOverlay.parentNode) introOverlay.remove();
+          };
+          var panels = introOverlay.querySelectorAll(".intro-panel");
+          var lastPanel = panels[panels.length - 1];
+          if(lastPanel){ lastPanel.addEventListener("animationend", cleanupIntro); }
+          /* Fallback in case animationend never fires (e.g. tab backgrounded) */
+          setTimeout(cleanupIntro, 3200);
+        }
+      }
+    }
+
     /* ---------- Header compact-on-scroll ---------- */
     var header = document.querySelector(".site-header");
     if(header){

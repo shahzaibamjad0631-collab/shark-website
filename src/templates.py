@@ -23,6 +23,28 @@ def brand(dark_bg=True, small=False):
     </a>'''
 
 # ---------------------------------------------------------------------------
+# Homepage opening intro — 4 clean photographs, shown once per browser
+# session (sessionStorage), then split apart to reveal the hero underneath.
+# No text/numbers/logo on the images themselves — see style.css for the
+# zoom-in/hold/split timeline and the prefers-reduced-motion override.
+# ---------------------------------------------------------------------------
+def intro_overlay():
+    imgs = [
+        ("/assets/img/intro-1.jpg", "20% 45%"),
+        ("/assets/img/intro-2.jpg", "35% 40%"),
+        ("/assets/img/intro-3.jpg", "68% 55%"),
+        ("/assets/img/intro-4.jpg", "60% 42%"),
+    ]
+    panels = "\n    ".join(
+        f'<div class="intro-panel"><img src="{src}" alt="" fetchpriority="high" decoding="async" style="object-position:{pos};"></div>'
+        for src, pos in imgs
+    )
+    return f'''<script>if(sessionStorage.getItem("sharkIntroPlayed")){{document.documentElement.classList.add("no-intro");}}</script>
+  <div class="intro-overlay" id="introOverlay" aria-hidden="true">
+    {panels}
+  </div>'''
+
+# ---------------------------------------------------------------------------
 # <head> block
 # ---------------------------------------------------------------------------
 def meta(title, description, path, schema_json=None, og_type="website"):
@@ -336,13 +358,14 @@ def quote_form(product_name=None):
 # ---------------------------------------------------------------------------
 # Page shell
 # ---------------------------------------------------------------------------
-def page(title, description, path, body_html, schema_json=None, og_type="website"):
+def page(title, description, path, body_html, schema_json=None, og_type="website", intro_html=None):
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
 {meta(title, description, path, schema_json, og_type)}
 </head>
 <body>
+  {intro_html or ""}
   {header(path)}
   {mobile_drawer(path)}
   {body_html}

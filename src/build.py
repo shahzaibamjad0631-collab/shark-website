@@ -172,7 +172,7 @@ def build_home():
         "SHARK | Fire &amp; Safety Equipment Supplier in the UAE",
         "SHARK supplies fire fighting and safety equipment for commercial, industrial and business "
         "requirements across the UAE — fire extinguishers, hose reels, cabinets, alarms and more.",
-        "/index.html", body, schema_json=org_schema()))
+        "/index.html", body, schema_json=org_schema(), intro_html=T.intro_overlay()))
 
 # ============================================================================
 # ABOUT

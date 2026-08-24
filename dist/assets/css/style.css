@@ -259,13 +259,23 @@ body.drawer-open{ overflow:hidden; }
   from{ opacity:0; transform:translateY(22px); }
   to{ opacity:1; transform:translateY(0); }
 }
-.hero-copy .eyebrow{ animation:heroIn .7s var(--ease) both; }
-.hero h1{ animation:heroIn .7s var(--ease) .08s both; }
-.hero-sub{ animation:heroIn .7s var(--ease) .16s both; }
-.hero-actions{ animation:heroIn .7s var(--ease) .24s both; }
-.hero-strip{ animation:heroIn .7s var(--ease) .3s both; }
+/* Default delays assume the homepage intro (below) is about to play, so the
+   hero only fades in once the intro panels start splitting apart. Pages
+   without the intro (and repeat visits — see .no-intro) use the fast values. */
+.hero-copy .eyebrow{ animation:heroIn .7s var(--ease) 1.5s both; }
+.hero h1{ animation:heroIn .7s var(--ease) 1.58s both; }
+.hero-sub{ animation:heroIn .7s var(--ease) 1.66s both; }
+.hero-actions{ animation:heroIn .7s var(--ease) 1.74s both; }
+.hero-strip{ animation:heroIn .7s var(--ease) 1.8s both; }
+.hero-figure{ position:relative; animation:heroIn .8s var(--ease) 1.68s both; }
 
-.hero-figure{ position:relative; animation:heroIn .8s var(--ease) .18s both; }
+/* Repeat visit this session — intro already played, skip straight to fast timing */
+html.no-intro .hero-copy .eyebrow{ animation-delay:0s; }
+html.no-intro .hero h1{ animation-delay:.08s; }
+html.no-intro .hero-sub{ animation-delay:.16s; }
+html.no-intro .hero-actions{ animation-delay:.24s; }
+html.no-intro .hero-strip{ animation-delay:.3s; }
+html.no-intro .hero-figure{ animation-delay:.18s; }
 .hero-visual{
   aspect-ratio: 4/5; position:relative; border:1px solid rgba(255,255,255,.12);
   background:
@@ -306,6 +316,58 @@ body.drawer-open{ overflow:hidden; }
 }
 .hero-strip span.tag{ color:var(--white); }
 .hero-strip .sep{ color:var(--red); }
+
+/* ---------- Homepage opening intro (4-panel photo reveal) ---------- */
+.intro-overlay{
+  position:fixed; inset:0; z-index:2000;
+  display:flex;
+  background:var(--black);
+}
+html.no-intro .intro-overlay{ display:none; }
+
+.intro-panel{
+  position:relative; flex:1 1 25%; overflow:hidden;
+  border-right:1px solid rgba(255,255,255,.10);
+  will-change:transform;
+}
+.intro-panel:last-child{ border-right:none; }
+.intro-panel img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+}
+.intro-panel::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(165deg, rgba(200,16,46,.12), rgba(10,11,13,.62));
+}
+
+@keyframes introPanelLeft{
+  0%   { transform:scale(1.04) translateX(0); }
+  33%  { transform:scale(1) translateX(0); }
+  58%  { transform:scale(1) translateX(0); }
+  100% { transform:scale(1) translateX(-100%); }
+}
+@keyframes introPanelRight{
+  0%   { transform:scale(1.04) translateX(0); }
+  33%  { transform:scale(1) translateX(0); }
+  58%  { transform:scale(1) translateX(0); }
+  100% { transform:scale(1) translateX(100%); }
+}
+.intro-panel:nth-child(1), .intro-panel:nth-child(2){
+  animation:introPanelLeft 2.4s var(--ease) forwards;
+}
+.intro-panel:nth-child(3), .intro-panel:nth-child(4){
+  animation:introPanelRight 2.4s var(--ease) forwards;
+}
+
+@media (max-width:720px){
+  .intro-panel:nth-child(1), .intro-panel:nth-child(2){ animation-duration:1.6s; }
+  .intro-panel:nth-child(3), .intro-panel:nth-child(4){ animation-duration:1.6s; }
+  html:not(.no-intro) .hero-copy .eyebrow{ animation-delay:1.0s; }
+  html:not(.no-intro) .hero h1{ animation-delay:1.08s; }
+  html:not(.no-intro) .hero-sub{ animation-delay:1.16s; }
+  html:not(.no-intro) .hero-actions{ animation-delay:1.24s; }
+  html:not(.no-intro) .hero-strip{ animation-delay:1.3s; }
+  html:not(.no-intro) .hero-figure{ animation-delay:1.18s; }
+}
 
 /* Page header (non-home hero) */
 .page-hero{
@@ -606,9 +668,11 @@ body.drawer-open{ overflow:hidden; }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
     animation-duration:.01ms !important;
+    animation-delay:0s !important;
     animation-iteration-count:1 !important;
     transition-duration:.01ms !important;
     scroll-behavior:auto !important;
   }
   .reveal{ opacity:1; transform:none; }
+  .intro-overlay{ display:none !important; }
 }
